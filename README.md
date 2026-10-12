@@ -1,4 +1,4 @@
-# APEX Split — 7-Day Workout Protocol
+# Fahim's 7-Day Workout Protocol
 
 A zero-friction, single-page workout reference built for GitHub Pages. Open the page and today's training day is already on screen — no logging, no accounts, no timers.
 
@@ -14,7 +14,7 @@ A zero-friction, single-page workout reference built for GitHub Pages. Open the 
 
 ## Design system
 
-APEX Split dark theme (see `Requirements.md` and the `desktop/` / `mobile/` reference artifacts):
+Dark theme per the PRD (`Requirements.md` and the `desktop/` / `mobile/` reference artifacts):
 
 | Token | Value |
 | --- | --- |
