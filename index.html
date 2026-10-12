@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>APEX Split // 7-Day Workout Protocol</title>
+  <meta name="description" content="APEX Split — a zero-tracking 7-day workout reference. Auto-detects today's split, instant exercise tables with YouTube form guides, missed-gym protocol and training guidelines."/>
+  <meta name="theme-color" content="#0c0e11"/>
+  <meta property="og:title" content="APEX Split // 7-Day Workout Protocol"/>
+  <meta property="og:description" content="Zero-tracking 7-day workout reference with automatic day detection, YouTube form guides and a missed-gym resumption playbook."/>
+  <meta property="og:type" content="website"/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%23c3f400'/%3E%3Ctext%20x='32'%20y='45'%20font-family='Arial,sans-serif'%20font-size='36'%20font-weight='900'%20text-anchor='middle'%20fill='%23161e00'%3EA%3C/text%3E%3C/svg%3E"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-dim": "#111317",
+            "background": "#111317",
+            "surface": "#111317",
+            "surface-container-lowest": "#0c0e11",
+            "surface-container-low": "#1a1c1f",
+            "surface-container": "#1e2023",
+            "surface-container-high": "#282a2d",
+            "surface-container-highest": "#333538",
+            "on-surface": "#e2e2e6",
+            "on-surface-variant": "#c4c9ac",
+            "primary-fixed": "#c3f400",
+            "on-primary-fixed": "#161e00",
+            "primary-container": "#c3f400",
+            "on-primary-container": "#283500",
+            "secondary-container": "#fe9400",
+            "on-secondary-container": "#633700",
+            "secondary": "#ffbc7c",
+            "tertiary-fixed-dim": "#00dbe9",
+            "error": "#ffb4ab",
+            "error-container": "#93000a",
+            "on-error-container": "#ffdad6"
+          },
+          fontFamily: {
+            "headline": ["Space Grotesk", "sans-serif"],
+            "body": ["Manrope", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; }
+    body { overscroll-behavior-y: none; background-color: #111317; }
+    ::selection { background: #c3f400; color: #161e00; }
+    ::-webkit-scrollbar { display: none; }
+    * { scrollbar-width: none; }
+    .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+
+    /* Desktop day-tab active state */
+    .tab-btn.active {
+      background-color: #1e2023 !important;
+      border-color: #c3f400 !important;
+      box-shadow: 0 0 12px rgba(195, 244, 0, 0.15);
+    }
+    .tab-btn.active .tab-title { color: #c3f400 !important; }
+
+    /* Panel switch animation */
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .day-panel:not(.hidden) { animation: panelIn 0.25s ease; }
+
+    /* Reference sections behave as collapsible drawers on mobile only */
+    @media (max-width: 767.98px) {
+      .drawer .drawer-content { display: none; }
+      .drawer.open .drawer-content { display: block; }
+      .drawer.open .drawer-chevron { transform: rotate(180deg); }
+    }
+    .drawer .drawer-chevron { transition: transform 0.3s ease; }
+  </style>
+</head>
+
+<body class="bg-surface font-body text-[15px] text-on-surface antialiased min-h-screen flex flex-col">
+
+  <a href="#schedule-viewer" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:px-3 focus:py-2 focus:rounded-lg focus:bg-primary-fixed focus:text-on-primary-fixed focus:font-headline focus:text-xs focus:font-bold focus:uppercase">Skip to today's workout</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-surface-container-lowest/90 backdrop-blur-md border-b border-surface-container-high/50">
+    <div class="h-16 max-w-[1400px] mx-auto px-4 md:px-8 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-9 h-9 rounded-lg bg-primary-fixed flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-on-primary-fixed text-[20px]">exercise</span>
+        </div>
+        <div class="flex flex-col min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="font-headline font-bold text-on-surface uppercase tracking-tight text-sm md:text-base truncate">APEX Split</span>
+            <span class="hidden sm:inline font-headline text-[11px] font-bold text-primary-fixed uppercase tracking-wider">// 7-Day Protocol</span>
+          </div>
+          <span class="text-[11px] text-on-surface-variant truncate">Zero-Tracking Reference Manual</span>
+        </div>
+      </div>
+
+      <nav id="mainNav" class="hidden md:flex items-center gap-1" aria-label="Sections">
+        <a href="#overview" data-nav="overview" class="nav-link px-3 py-1.5 rounded-lg text-xs font-headline uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">Overview</a>
+        <a href="#schedule-viewer" data-nav="schedule-viewer" class="nav-link px-3 py-1.5 rounded-lg text-xs font-headline uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">Daily Schedule</a>
+        <a href="#missed-gym" data-nav="missed-gym" class="nav-link px-3 py-1.5 rounded-lg text-xs font-headline uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">Missed Gym Guide</a>
+        <a href="#guidelines" data-nav="guidelines" class="nav-link px-3 py-1.5 rounded-lg text-xs font-headline uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">Guidelines</a>
+      </nav>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <!-- Desktop / tablet live day status -->
+        <div class="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-surface-container-highest">
+          <span class="w-2 h-2 rounded-full bg-primary-fixed animate-pulse"></span>
+          <span id="todayBadge" class="font-headline text-[11px] font-bold text-on-surface uppercase whitespace-nowrap">Today: —</span>
+        </div>
+        <!-- Mobile compact day chip -->
+        <span id="todayChip" class="sm:hidden px-2 py-1 rounded-full bg-primary-fixed/10 text-primary-fixed font-headline text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">TODAY: —</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="w-full pt-20 md:pt-24 pb-32 md:pb-12">
+    <div class="max-w-[1400px] mx-auto px-4 md:px-8 space-y-8">
+
+      <!-- ============ HERO / OVERVIEW ============ -->
+      <section class="rounded-xl bg-surface-container-low p-6 md:p-8 border border-surface-container-high/40 scroll-mt-24" id="overview">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div class="space-y-2">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-surface-container-high text-primary-fixed font-headline text-[11px] font-bold uppercase tracking-wider">Information Only</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-headline text-[11px] uppercase tracking-wider">Zero Logging</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-headline text-[11px] uppercase tracking-wider">Video Form Guides</span>
+            </div>
+            <h1 class="font-headline text-3xl md:text-4xl font-bold tracking-tight text-on-surface">7-Day Workout Plan</h1>
+            <p class="text-on-surface-variant max-w-2xl text-[15px] leading-relaxed">
+              Targeted hypertrophy &amp; strength progression. Pure instructional layout with direct YouTube form video links for every exercise and automatic day detection — open it and today's session is already on screen.
+            </p>
+          </div>
+          <!-- Goals -->
+          <div class="flex flex-wrap lg:flex-col gap-2 shrink-0">
+            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-surface-container-high text-on-surface text-xs font-headline font-semibold">
+              <span class="material-symbols-outlined text-primary-fixed text-[18px]">fitness_center</span>
+              <span>Build Muscle</span>
+            </div>
+            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-surface-container-high text-on-surface text-xs font-headline font-semibold">
+              <span class="material-symbols-outlined text-secondary text-[18px]">bolt</span>
+              <span>Get Stronger</span>
+            </div>
+            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-surface-container-high text-on-surface text-xs font-headline font-semibold">
+              <span class="material-symbols-outlined text-tertiary-fixed-dim text-[18px]">ecg_heart</span>
+              <span>Improve Fitness</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SCHEDULE VIEWER ============ -->
+      <section class="space-y-4 scroll-mt-24" id="schedule-viewer">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <div class="font-headline text-[11px] font-bold text-primary-fixed uppercase tracking-wider">// Tabbed Schedule Viewer</div>
+            <h2 class="font-headline text-2xl font-bold text-on-surface">Daily Workout Guide</h2>
+          </div>
+          <div class="text-xs text-on-surface-variant flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-error text-[18px]">smart_display</span>
+            <span>Tap any red button for the exercise form video</span>
+          </div>
+        </div>
+
+        <!-- Desktop / tablet day tabs (Mon start) -->
+        <div id="dayTabsDesktop" class="hidden md:grid grid-cols-4 lg:grid-cols-7 gap-2 bg-surface-container-low p-2 rounded-xl border border-surface-container-high/40" role="tablist" aria-label="Days of the week"></div>
+
+        <!-- Mobile swipeable day tabs -->
+        <div class="md:hidden -mx-4 px-4">
+          <div id="dayTabsMobile" class="flex items-stretch gap-2 overflow-x-auto snap-x snap-mandatory py-1" role="tablist" aria-label="Days of the week"></div>
+        </div>
+
+        <!-- Panels (rendered by script) -->
+        <div id="dayPanels" class="rounded-xl md:rounded-none md:border-0"></div>
+      </section>
+
+      <!-- ============ MISSED GYM PROTOCOL (drawer on mobile) ============ -->
+      <section class="drawer scroll-mt-24 rounded-xl bg-surface-container-low border border-surface-container-high/40 overflow-hidden" id="missed-gym">
+        <button type="button" class="drawer-toggle w-full px-4 py-4 md:px-8 md:pt-8 md:pb-0 flex items-center justify-between gap-3 text-left" aria-expanded="false" aria-controls="missed-gym-content">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="md:hidden w-10 h-10 rounded-lg bg-primary-fixed/10 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-primary-fixed text-[20px]">assignment_late</span>
+            </div>
+            <div class="min-w-0">
+              <div class="font-headline text-[11px] font-bold uppercase tracking-wider text-secondary">// Contingency Protocol</div>
+              <h2 class="font-headline text-xl md:text-2xl font-bold text-on-surface truncate">
+                <span class="md:hidden">Missed Gym Protocol</span>
+                <span class="hidden md:inline">What to do if you miss the gym for 3–5 days</span>
+              </h2>
+              <div class="md:hidden font-headline text-[11px] font-bold uppercase tracking-wider text-primary-fixed">3–5 Day Absence Playbook</div>
+            </div>
+          </div>
+          <span class="drawer-chevron material-symbols-outlined text-on-surface-variant md:hidden text-[24px]">expand_more</span>
+        </button>
+
+        <div class="drawer-content px-4 pb-4 md:px-8 md:pb-8 pt-4 md:pt-6 space-y-5" id="missed-gym-content">
+
+          <!-- Golden rule -->
+          <div class="p-4 rounded-lg bg-surface-container border-l-4 border-primary-fixed flex items-start gap-3">
+            <span class="material-symbols-outlined text-primary-fixed text-2xl shrink-0 mt-0.5">info</span>
+            <div>
+              <div class="font-headline text-xs font-bold uppercase text-primary-fixed tracking-wider">The Golden Rule</div>
+              <p class="font-headline font-semibold text-on-surface text-base mt-0.5">
+                Don't restart the entire plan or try to make up missed workouts. Resume from where you left off.
+              </p>
+            </div>
+          </div>
+
+          <!-- Absence table (desktop) -->
+          <div class="hidden md:block overflow-x-auto rounded-lg border border-surface-container-high/40">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-surface-container text-on-surface-variant text-xs font-headline font-semibold uppercase">
+                  <th class="py-3 px-4 w-44">Time Away</th>
+                  <th class="py-3 px-4">What to do when you return</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-surface-container-high/30 text-sm">
+                <tr class="hover:bg-surface-container/30 transition-colors">
+                  <td class="py-3.5 px-4 font-headline font-bold text-primary-fixed">1–2 days</td>
+                  <td class="py-3.5 px-4 text-on-surface">Continue with your next scheduled workout.</td>
+                </tr>
+                <tr class="hover:bg-surface-container/30 transition-colors">
+                  <td class="py-3.5 px-4 font-headline font-bold text-primary-fixed">3–5 days</td>
+                  <td class="py-3.5 px-4 text-on-surface">Resume the next workout in your split. If you feel recovered, use your normal weights with good form; reduce the load if needed.</td>
+                </tr>
+                <tr class="hover:bg-surface-container/30 transition-colors">
+                  <td class="py-3.5 px-4 font-headline font-bold text-secondary">6–10 days</td>
+                  <td class="py-3.5 px-4 text-on-surface">Consider starting with around 80–90% of your usual load and slightly less volume.</td>
+                </tr>
+                <tr class="hover:bg-surface-container/30 transition-colors">
+                  <td class="py-3.5 px-4 font-headline font-bold text-error">More than 10–14 days</td>
+                  <td class="py-3.5 px-4 text-on-surface">Return gradually, using lighter weights and fewer sets until your strength and stamina recover.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Absence cards (mobile) -->
+          <div class="md:hidden grid grid-cols-1 gap-2">
+            <div class="p-3.5 rounded-lg bg-surface-container flex flex-col gap-1">
+              <div class="flex items-center justify-between gap-2">
+                <span class="font-headline font-bold text-primary-fixed">1–2 Days Missed</span>
+                <span class="font-headline text-[10px] font-bold uppercase tracking-wider text-primary-fixed">Zero Impact</span>
+              </div>
+              <p class="text-[13px] text-on-surface-variant">Treat them as unplanned rest days. Continue with your next scheduled workout at 100%.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-surface-container flex flex-col gap-1">
+              <div class="flex items-center justify-between gap-2">
+                <span class="font-headline font-bold text-primary-fixed">3–5 Days Missed</span>
+                <span class="font-headline text-[10px] font-bold uppercase tracking-wider text-primary-fixed">Slight Buffer</span>
+              </div>
+              <p class="text-[13px] text-on-surface-variant">Resume the next workout in your split. If you feel recovered, use your normal weights with good form; reduce the load if needed.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-surface-container flex flex-col gap-1">
+              <div class="flex items-center justify-between gap-2">
+                <span class="font-headline font-bold text-secondary">6–10 Days Missed</span>
+                <span class="font-headline text-[10px] font-bold uppercase tracking-wider text-secondary">Ramp-Up</span>
+              </div>
+              <p class="text-[13px] text-on-surface-variant">Consider starting with around 80–90% of your usual load and slightly less volume.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-surface-container flex flex-col gap-1">
+              <div class="flex items-center justify-between gap-2">
+                <span class="font-headline font-bold text-error">&gt; 10–14 Days Missed</span>
+                <span class="font-headline text-[10px] font-bold uppercase tracking-wider text-error">Gradual Reset</span>
+              </div>
+              <p class="text-[13px] text-on-surface-variant">Return gradually, using lighter weights and fewer sets until your strength and stamina recover.</p>
+            </div>
+          </div>
+
+          <!-- Field example -->
+          <div class="p-4 rounded-lg bg-surface-container-lowest border border-surface-container-high/30 space-y-2">
+            <div class="font-headline font-bold text-xs uppercase text-on-surface-variant tracking-wider">Practical Field Example:</div>
+            <p class="text-sm text-on-surface leading-relaxed">
+              Suppose you completed <strong class="text-primary-fixed">Day 2 (Pull)</strong>, then missed the gym for four days:
+            </p>
+            <ul class="text-sm text-on-surface-variant space-y-1 list-disc list-inside">
+              <li>Your next workout is <strong class="text-on-surface">Day 3 — Legs &amp; Abs</strong>.</li>
+              <li>After that, continue with <strong class="text-on-surface">Day 4 — Rest</strong>.</li>
+              <li>Proceed to <strong class="text-on-surface">Day 5 — Chest, Back &amp; Arms</strong>.</li>
+              <li>Continue the schedule normally without doing double workouts.</li>
+            </ul>
+            <p class="text-xs text-on-surface-variant italic pt-1">
+              You do not need to repeat Day 1 just because you took a break. If you are sick, injured, or still feeling unusually fatigued, recover first and return gradually.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ GENERAL GUIDELINES (drawer on mobile) ============ -->
+      <section class="drawer scroll-mt-24 rounded-xl bg-surface-container-low border border-surface-container-high/40 overflow-hidden" id="guidelines">
+        <button type="button" class="drawer-toggle w-full px-4 py-4 md:px-8 md:pt-8 md:pb-0 flex items-center justify-between gap-3 text-left" aria-expanded="false" aria-controls="guidelines-content">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="md:hidden w-10 h-10 rounded-lg bg-primary-fixed/10 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-primary-fixed text-[20px]">fitness_center</span>
+            </div>
+            <div class="min-w-0">
+              <div class="font-headline text-[11px] font-bold uppercase tracking-wider text-primary-fixed">// Core Principles</div>
+              <h2 class="font-headline text-xl md:text-2xl font-bold text-on-surface truncate">
+                <span class="md:hidden">General Guidelines</span>
+                <span class="hidden md:inline">General Training Guidelines</span>
+              </h2>
+              <div class="md:hidden font-headline text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">6 Apex Training Principles</div>
+            </div>
+          </div>
+          <span class="drawer-chevron material-symbols-outlined text-on-surface-variant md:hidden text-[24px]">expand_more</span>
+        </button>
+
+        <div class="drawer-content px-4 pb-4 md:px-8 md:pb-8 pt-4 md:pt-6 space-y-5" id="guidelines-content">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="p-4 rounded-lg bg-surface-container border border-surface-container-high/40 space-y-2">
+              <div class="font-headline font-bold text-sm text-primary-fixed">01 / Warm-up</div>
+              <p class="text-sm text-on-surface-variant">5–10 minutes of light cardio, followed by warm-up sets before heavy work.</p>
+            </div>
+            <div class="p-4 rounded-lg bg-surface-container border border-surface-container-high/40 space-y-2">
+              <div class="font-headline font-bold text-sm text-primary-fixed">02 / Rest Between Sets</div>
+              <p class="text-sm text-on-surface-variant">60–120 seconds; allow longer for demanding compound exercises.</p>
+            </div>
+            <div class="p-4 rounded-lg bg-surface-container border border-surface-container-high/40 space-y-2">
+              <div class="font-headline font-bold text-sm text-primary-fixed">03 / Weight Selection</div>
+              <p class="text-sm text-on-surface-variant">Choose a weight that lets you complete each rep with controlled, proper form.</p>
+            </div>
+            <div class="p-4 rounded-lg bg-surface-container border border-surface-container-high/40 space-y-2">
+              <div class="font-headline font-bold text-sm text-primary-fixed">04 / Progressive Overload</div>
+              <p class="text-sm text-on-surface-variant">Gradually increase reps or weight as exercises become easier.</p>
+            </div>
+            <div class="p-4 rounded-lg bg-surface-container border border-surface-container-high/40 space-y-2">
+              <div class="font-headline font-bold text-sm text-primary-fixed">05 / Consistency</div>
+              <p class="text-sm text-on-surface-variant">Missing a few days will not ruin your progress. Avoid doubling your workload to compensate.</p>
+            </div>
+            <div class="p-4 rounded-lg bg-surface-container border border-surface-container-high/40 space-y-2">
+              <div class="font-headline font-bold text-sm text-primary-fixed">06 / Training Frequency</div>
+              <p class="text-sm text-on-surface-variant">Follow the split in order, but don't force yourself to train seven consecutive calendar days.</p>
+            </div>
+          </div>
+
+          <!-- Disclaimer -->
+          <div class="p-4 rounded-lg bg-surface-container-highest border border-surface-container-high text-xs text-on-surface leading-relaxed">
+            <strong class="text-primary-fixed">Important:</strong> This is a suggested exercise plan based on the workout split in your screenshot. The original screenshot specifies the split only, not these exact exercises, sets, or reps. Adjust the exercise selection and training volume to your experience and recovery.
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="w-full border-t border-surface-container-high/40 bg-surface-container-lowest py-8 text-center text-xs text-on-surface-variant space-y-1">
+    <div>APEX Split <span class="text-primary-fixed">//</span> Pure Information 7-Day Workout Protocol</div>
+    <div class="text-[11px] text-on-surface-variant/70">No accounts • No logging • No timers — open, glance, train.</div>
+  </footer>
+
+  <!-- ============ MOBILE BOTTOM NAV ============ -->
+  <nav class="md:hidden fixed bottom-0 inset-x-0 z-50 bg-surface-container-lowest/95 backdrop-blur-md border-t border-surface-container-high/50 pb-safe" aria-label="Quick navigation">
+    <div class="grid grid-cols-4">
+      <a href="#schedule-viewer" data-bnav="schedule-viewer" class="bnav flex flex-col items-center justify-center gap-0.5 py-2.5 text-[10px] font-headline font-bold uppercase tracking-wider text-primary-fixed">
+        <span class="material-symbols-outlined text-[20px]">receipt_long</span>
+        <span>Split</span>
+      </a>
+      <a href="#missed-gym" data-bnav="missed-gym" class="bnav flex flex-col items-center justify-center gap-0.5 py-2.5 text-[10px] font-headline font-bold uppercase tracking-wider text-on-surface-variant">
+        <span class="material-symbols-outlined text-[20px]">assignment_late</span>
+        <span>Protocol</span>
+      </a>
+      <a href="#guidelines" data-bnav="guidelines" class="bnav flex flex-col items-center justify-center gap-0.5 py-2.5 text-[10px] font-headline font-bold uppercase tracking-wider text-on-surface-variant">
+        <span class="material-symbols-outlined text-[20px]">fitness_center</span>
+        <span>Guide</span>
+      </a>
+      <button type="button" id="toTop" class="flex flex-col items-center justify-center gap-0.5 py-2.5 text-[10px] font-headline font-bold uppercase tracking-wider text-on-surface-variant">
+        <span class="material-symbols-outlined text-[20px]">arrow_upward</span>
+        <span>Top</span>
+      </button>
+    </div>
+  </nav>
+
+  <noscript>
+    <div class="fixed bottom-16 inset-x-4 z-[60] p-4 rounded-lg bg-secondary-container text-on-secondary-container text-sm font-headline font-semibold text-center">
+      JavaScript is disabled — enable it to view the daily workouts and auto day detection.
+    </div>
+  </noscript>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ================================================================
+     MASTER PLAN DATA — edit here to update the page.
+     Source of truth: workout-plan.md (7-Day Split, Monday start).
+     `yt` = YouTube search topic; link is built as:
+     https://www.youtube.com/results?search_query=how+to+do+[yt]+proper+form
+     ================================================================ */
+  /*__DATA_START__*/
+  const DAYS = [
+    {
+      n: 1, code: "MON", name: "Monday", split: "PUSH", short: "PUSH", slug: "push",
+      badge: "Mon (Push)", chip: "bg-primary-container text-on-primary-container",
+      focus: "Chest • Shoulders • Triceps",
+      target: "Pectoralis Major, Anterior Deltoids, Triceps",
+      hero: "Push: Anterior Power", heroTag: "Hypertrophy",
+      rest: "Rest: 60–120s between sets", type: "train",
+      exercises: [
+        { name: "Seated Machine Chest Press", sets: "3–4 × 8–12", cue: "Controlled Eccentric", yt: "seated machine chest press" },
+        { name: "Incline Dumbbell Press",     sets: "3–4 × 8–12", cue: "Full Stretch",        yt: "incline dumbbell press" },
+        { name: "Shoulder Press (Machine/DB)",sets: "3–4 × 8–12", cue: "Full Lockout",        yt: "seated dumbbell shoulder press" },
+        { name: "Dumbbell Lateral Raises",    sets: "3–4 × 12–15",cue: "Constant Tension",    yt: "dumbbell lateral raise" },
+        { name: "Triceps Pushdown",           sets: "3–4 × 10–12",cue: "Full Lockout",        yt: "triceps rope pushdown" },
+        { name: "Triceps Dips",               sets: "3 × 8–12",   cue: "Forward Lean",        yt: "triceps dips" }
+      ]
+    },
+    {
+      n: 2, code: "TUE", name: "Tuesday", split: "PULL", short: "PULL", slug: "pull",
+      badge: "Tue (Pull)", chip: "bg-secondary-container text-on-secondary-container",
+      focus: "Back • Rear Shoulders • Biceps",
+      target: "Latissimus Dorsi, Rhomboids, Rear Delts, Biceps",
+      hero: "Pull: Lat & Rear Chain", heroTag: "Pull Mass",
+      rest: "Rest: 60–120s between sets", type: "train",
+      exercises: [
+        { name: "Lat Pulldown",           sets: "3–4 × 8–12", cue: "Squeeze Lats",          yt: "lat pulldown" },
+        { name: "Seated Cable Row",       sets: "3–4 × 8–12", cue: "Chest Tall",            yt: "seated cable row" },
+        { name: "Chest-Supported Row",    sets: "3 × 8–12",   cue: "Squeeze Shoulder Blades", yt: "chest supported row" },
+        { name: "Face Pulls",             sets: "3 × 12–15",  cue: "External Rotation",     yt: "cable face pulls" },
+        { name: "Dumbbell Biceps Curl",   sets: "3 × 10–12",  cue: "No Swinging",           yt: "dumbbell biceps curl" },
+        { name: "Hammer Curl",            sets: "3 × 10–12",  cue: "Neutral Grip",          yt: "dumbbell hammer curls" }
+      ]
+    },
+    {
+      n: 3, code: "WED", name: "Wednesday", split: "LEGS & ABS", short: "LEGS/ABS", slug: "legs-abs",
+      badge: "Wed (Legs & Abs)", chip: "bg-tertiary-fixed-dim text-black",
+      focus: "Quadriceps • Hamstrings • Glutes • Calves • Core",
+      target: "Quadriceps, Hamstrings, Glutes, Calves, Core",
+      hero: "Legs & Abs: Lower Foundation", heroTag: "Strength + Core",
+      rest: "Rest: 90–120s on compounds", type: "train",
+      exercises: [
+        { name: "Goblet Squat",        sets: "3–4 × 8–12",     cue: "Upright Torso",   yt: "goblet squat" },
+        { name: "Leg Press",           sets: "3–4 × 10–12",    cue: "Knees Track Toes", yt: "leg press" },
+        { name: "Lying Leg Curl",      sets: "3 × 10–12",      cue: "Controlled Eccentric", yt: "lying leg curl" },
+        { name: "Calf Raises",         sets: "3–4 × 12–15",    cue: "Full Range",      yt: "calf raises" },
+        { name: "Plank",               sets: "3 × 30–60 sec",  cue: "Glutes Engaged",  yt: "forearm plank" },
+        { name: "Hanging Knee Raises", sets: "3 × 10–15",      cue: "No Swinging",     yt: "hanging knee raises" }
+      ]
+    },
+    {
+      n: 4, code: "THU", name: "Thursday", split: "REST", short: "REST", slug: "rest-thu",
+      badge: "Thu (Rest)", chip: "bg-surface-container-highest text-on-surface",
+      focus: "Systemic Repair & Adaptation",
+      target: "Nervous System, Muscles, Mind",
+      hero: "Rest: System Recharge", heroTag: "Recovery",
+      rest: "Active Restoration Interval", type: "rest",
+      items: [
+        { icon: "bed",                   color: "text-primary-fixed",     title: "Sleep Protocol",           text: "Get 7–9 hours of quality sleep to maximize hormone production and tissue synthesis." },
+        { icon: "water_drop",            color: "text-tertiary-fixed-dim",title: "Hydration Target",         text: "Drink enough water and replenish electrolytes to flush cellular waste and rehydrate muscle fibers." },
+        { icon: "restaurant",            color: "text-secondary",         title: "Protein & Nutrition",      text: "Eat balanced meals with sufficient protein to rebuild muscle tissue." },
+        { icon: "directions_walk",       color: "text-on-surface",        title: "Optional Gentle Movement", text: "Light walking or gentle mobility stretching to stimulate blood circulation without adding fatigue." },
+        { icon: "battery_charging_full", color: "text-primary-fixed",     title: "Muscular Recovery",        text: "Allow your nervous system and muscle groups to fully recharge before the next session.", wide: true }
+      ]
+    },
+    {
+      n: 5, code: "FRI", name: "Friday", split: "CHEST, BACK & ARMS", short: "UPPER", slug: "upper",
+      badge: "Fri (Chest/Back/Arms)", chip: "bg-primary-container text-on-primary-container",
+      focus: "Upper-Body Strength",
+      target: "Chest, Back, Biceps, Triceps",
+      hero: "Upper Body: Strength Circuit", heroTag: "Upper Strength",
+      rest: "Rest: 60–90s between sets", type: "train",
+      exercises: [
+        { name: "Bench Press",       sets: "3 × 8–12",   cue: "Shoulder Blades Pinned", yt: "barbell bench press" },
+        { name: "Cable Fly",         sets: "3 × 10–15",  cue: "Squeeze at Midline",     yt: "cable fly" },
+        { name: "Lat Pulldown",      sets: "3 × 8–12",   cue: "Chest to Bar",           yt: "lat pulldown" },
+        { name: "Seated Cable Row",  sets: "3 × 8–12",   cue: "Elbows Past Torso",      yt: "seated cable row" },
+        { name: "Biceps Curl",       sets: "3 × 10–12",  cue: "Strict Form",            yt: "biceps curl" },
+        { name: "Triceps Extension", sets: "3 × 10–12",  cue: "Full Stretch",           yt: "overhead triceps extension" }
+      ]
+    },
+    {
+      n: 6, code: "SAT", name: "Saturday", split: "SHOULDERS & LEGS", short: "SHLDR/LEG", slug: "shoulders-legs",
+      badge: "Sat (Shoulders/Legs)", chip: "bg-secondary-container text-on-secondary-container",
+      focus: "Shoulders • Quadriceps • Hamstrings • Calves",
+      target: "Deltoids, Quadriceps, Hamstrings, Calves",
+      hero: "Shoulders & Legs: Power Day", heroTag: "Power",
+      rest: "Rest: 60–90s between sets", type: "train",
+      exercises: [
+        { name: "Shoulder Press",         sets: "3 × 8–12",    cue: "Core Braced",      yt: "overhead shoulder press" },
+        { name: "Dumbbell Lateral Raises",sets: "3 × 12–15",   cue: "Lead With Elbows", yt: "dumbbell lateral raises" },
+        { name: "Reverse Pec Deck Fly",   sets: "3 × 12–15",   cue: "Rear Delts",       yt: "reverse pec deck fly" },
+        { name: "Leg Extension",          sets: "3 × 10–12",   cue: "Pause at Top",     yt: "leg extension" },
+        { name: "Leg Curl",               sets: "3 × 10–12",   cue: "Slow Negative",    yt: "leg curl" },
+        { name: "Calf Raises",            sets: "3–4 × 12–15", cue: "Deep Stretch",     yt: "standing calf raises" }
+      ]
+    },
+    {
+      n: 7, code: "SUN", name: "Sunday", split: "REST", short: "REST", slug: "rest-sun",
+      badge: "Sun (Rest)", chip: "bg-surface-container-highest text-on-surface",
+      focus: "Cycle Reset & Next Microcycle Prep",
+      target: "Full Body Reset",
+      hero: "Rest: Cycle Reset", heroTag: "De-Load",
+      rest: "Microcycle Wrap-up", type: "rest",
+      items: [
+        { icon: "bed",       color: "text-primary-fixed",      title: "Prioritize Sleep & Hydration", text: "Deep central nervous system rest — ensure 8+ hours of restful sleep and generous water intake." },
+        { icon: "nutrition", color: "text-tertiary-fixed-dim", title: "Eat Nutritious Meals",          text: "Refill depleted glycogen stores with quality carbohydrates, wholesome fats, and clean protein sources." },
+        { icon: "hiking",    color: "text-secondary",          title: "Take an Optional Walk",         text: "Gentle 20–40 minute outdoor walk to promote blood flow and mental clarity without taxing muscles." },
+        { icon: "flag",      color: "text-primary-fixed",      title: "Prepare for Next Cycle",        text: "Get gym clothes ready, plan meal timing, and prepare mentally for Monday's Push session." }
+      ]
+    }
+  ];
+
+  const SLUG_MAP = {
+    "push": 1, "pull": 2, "legs-abs": 3, "legs": 3,
+    "rest-thu": 4, "rest": 4, "thu": 4,
+    "upper": 5, "chest-back-arms": 5,
+    "shoulders-legs": 6, "shoulders": 6,
+    "rest-sun": 7, "sun": 7
+  };
+  /*__DATA_END__*/
+
+  /* ---------------- Helpers ---------------- */
+  const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  const ytUrl = (topic) => "https://www.youtube.com/results?search_query=how+to+do+" + topic.trim().split(/\s+/).join("+") + "+proper+form";
+  const pad2 = (n) => (n < 10 ? "0" + n : "" + n);
+  const byDay = (n) => DAYS[n - 1];
+
+  // JS getDay(): 0 = Sun … 6 = Sat  →  Day 1 (Mon) … Day 7 (Sun)
+  const TODAY_N = (() => { const d = new Date().getDay(); return d === 0 ? 7 : d; })();
+
+  /* ---------------- Build: tabs ---------------- */
+  function buildTabs() {
+    const desktop = document.getElementById("dayTabsDesktop");
+    const mobile = document.getElementById("dayTabsMobile");
+
+    desktop.innerHTML = DAYS.map((d) => `
+      <button type="button" role="tab" id="dtab-${d.n}" aria-controls="panel-${d.n}" aria-selected="false"
+        class="tab-btn flex flex-col items-start p-3 rounded-lg text-left transition-all border border-transparent hover:bg-surface-container/60 cursor-pointer" data-day="${d.n}">
+        <div class="w-full flex items-center justify-between gap-1 mb-1">
+          <span class="text-[10px] font-headline font-bold uppercase px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">Day ${d.n}</span>
+          ${d.n === TODAY_N ? '<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-primary-fixed text-on-primary-fixed uppercase">Today</span>' : ""}
+        </div>
+        <span class="tab-title font-headline font-bold text-sm text-on-surface truncate w-full">${d.name}</span>
+        <span class="text-[11px] text-on-surface-variant truncate w-full">${esc(d.short)}</span>
+      </button>`).join("");
+
+    mobile.innerHTML = DAYS.map((d) => `
+      <button type="button" role="tab" id="mtab-${d.n}" aria-controls="panel-${d.n}" aria-selected="false"
+        class="mtab snap-start shrink-0 flex flex-col items-center justify-center min-w-[80px] h-20 px-3 rounded-xl bg-surface-container-low transition-all duration-200" data-day="${d.n}">
+        ${d.n === TODAY_N ? '<span class="px-1.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-headline text-[9px] font-bold tracking-widest uppercase mb-1">Today</span>' : '<span class="mb-1 h-[18px]"></span>'}
+        <span class="day-code font-headline font-semibold text-[18px] uppercase tracking-tight text-on-surface leading-none">${d.code}</span>
+        <span class="day-split font-headline text-[10px] font-bold tracking-wider uppercase mt-1 ${d.type === "rest" ? "text-secondary" : "text-on-surface-variant"}">${esc(d.short)}</span>
+      </button>`).join("");
+  }
+
+  /* ---------------- Build: panels ---------------- */
+  function exerciseCardsMobile(d) {
+    return d.exercises.map((ex, i) => `
+      <div class="w-full rounded-xl bg-surface-container-low p-4 flex items-center justify-between gap-3 shadow-sm">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center shrink-0">
+            <span class="font-headline font-bold text-primary-fixed">${pad2(i + 1)}</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="font-headline font-semibold text-on-surface uppercase truncate" title="${esc(ex.name)}">${esc(ex.name)}</span>
+            <div class="flex items-center gap-2 mt-1 min-w-0">
+              <span class="px-2 py-0.5 rounded-full bg-surface-container-highest font-headline text-[11px] font-bold text-primary-fixed whitespace-nowrap">${esc(ex.sets)}</span>
+              <span class="text-[13px] text-on-surface-variant truncate">${esc(ex.cue)}</span>
+            </div>
+          </div>
+        </div>
+        <a aria-label="Watch ${esc(ex.name)} form guide" title="Watch form guide"
+          class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-error-container text-on-error-container hover:bg-error hover:text-on-error transition-colors"
+          href="${ytUrl(ex.yt)}" target="_blank" rel="noopener noreferrer">
+          <span class="material-symbols-outlined text-[24px]">smart_display</span>
+        </a>
+      </div>`).join("");
+  }
+
+  function panelHeaderDesktop(d) {
+    return `
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-surface-container-high/60">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="px-2 py-0.5 rounded ${d.chip} font-headline font-bold text-xs uppercase">Day ${d.n} • ${d.name}</span>
+            <h3 class="font-headline text-2xl font-bold text-on-surface">${esc(d.split)}</h3>
+          </div>
+          <div class="text-xs text-on-surface-variant font-medium">Focus: ${esc(d.focus)}</div>
+        </div>
+        <div class="text-xs ${d.type === "rest" ? "text-primary-fixed" : "text-on-surface-variant"} px-3 py-1.5 rounded-lg bg-surface-container flex items-center gap-2 self-start md:self-auto whitespace-nowrap">
+          <span class="material-symbols-outlined ${d.type === "rest" ? "" : "text-primary-fixed"} text-base">${d.type === "rest" ? "spa" : "timer"}</span>
+          <span>${esc(d.rest)}</span>
+        </div>
+      </div>`;
+  }
+
+  function exerciseTableDesktop(d) {
+    const rows = d.exercises.map((ex, i) => `
+        <tr class="hover:bg-surface-container/40 transition-colors">
+          <td class="py-3.5 px-4 text-center font-headline font-bold text-primary-fixed">${pad2(i + 1)}</td>
+          <td class="py-3.5 px-4 font-medium text-on-surface">${esc(ex.name)}</td>
+          <td class="py-3.5 px-4 font-headline font-semibold text-on-surface whitespace-nowrap">${esc(ex.sets)}</td>
+          <td class="py-3.5 px-4 text-right">
+            <a class="inline-flex items-center gap-1.5 px-3 py-2 rounded-md bg-[#282a2d] hover:bg-red-950/40 text-error hover:text-[#ffdad6] border border-red-500/30 text-xs font-headline font-semibold uppercase tracking-wider transition-all"
+              href="${ytUrl(ex.yt)}" target="_blank" rel="noopener noreferrer">
+              <span class="material-symbols-outlined text-[16px]">play_circle</span>
+              <span>YouTube</span>
+            </a>
+          </td>
+        </tr>`).join("");
+
+    return `
+      ${panelHeaderDesktop(d)}
+      <div class="overflow-x-auto rounded-lg border border-surface-container-high/40">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-surface-container text-on-surface-variant text-xs font-headline font-semibold uppercase">
+              <th class="py-3 px-4 w-12 text-center">#</th>
+              <th class="py-3 px-4">Exercise Name</th>
+              <th class="py-3 px-4 w-40">Sets × Reps</th>
+              <th class="py-3 px-4 text-right w-48">Video Tutorial</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-surface-container-high/30 text-sm">${rows}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  function restCards(d) {
+    return `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      ${d.items.map((it) => `
+      <div class="p-4 rounded-lg bg-surface-container border border-surface-container-high/40 space-y-2 ${it.wide ? "sm:col-span-2" : ""}">
+        <div class="flex items-center gap-2 ${it.color} font-headline font-bold text-sm">
+          <span class="material-symbols-outlined text-lg">${it.icon}</span>
+          <span>${esc(it.title)}</span>
+        </div>
+        <p class="text-sm text-on-surface-variant">${esc(it.text)}</p>
+      </div>`).join("")}
+    </div>`;
+  }
+
+  function buildPanels() {
+    const wrap = document.getElementById("dayPanels");
+    wrap.innerHTML = DAYS.map((d) => {
+      // Mobile session overview card
+      const mobileHead = `
+        <div class="rounded-xl bg-surface-container p-4 flex items-center justify-between gap-3 shadow-md">
+          <div class="flex flex-col min-w-0">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="font-headline text-[11px] font-bold uppercase tracking-wider text-primary-fixed">Day ${pad2(d.n)} Architecture</span>
+              <span class="px-1.5 py-0.5 rounded-full bg-surface-container-highest font-headline text-[10px] font-bold uppercase text-on-surface-variant">${esc(d.heroTag)}</span>
+            </div>
+            <h3 class="font-headline text-[22px] font-bold uppercase text-primary-fixed mt-1 truncate">${esc(d.hero)}</h3>
+            <p class="text-[13px] text-on-surface-variant mt-0.5">Target: ${esc(d.target)}</p>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-surface-container-high flex flex-col items-center justify-center shrink-0">
+            <span class="font-headline font-bold text-primary-fixed leading-none">${d.type === "train" ? d.exercises.length : "—"}</span>
+            <span class="font-headline text-[9px] font-bold uppercase text-on-surface-variant mt-0.5">${d.type === "train" ? "Moves" : "Rest"}</span>
+          </div>
+        </div>`;
+
+      const mobileBody = d.type === "train"
+        ? `<div class="flex flex-col gap-2">${exerciseCardsMobile(d)}</div>`
+        : restCards(d);
+
+      const desktopBody = d.type === "train"
+        ? exerciseTableDesktop(d)
+        : `${panelHeaderDesktop(d)}<div class="mt-6">${restCards(d)}</div>`;
+
+      return `
+      <article class="day-panel hidden md:rounded-xl md:bg-surface-container-low md:p-6 md:border md:border-surface-container-high/40 md:shadow-lg md:space-y-6 space-y-3"
+        id="panel-${d.n}" role="tabpanel" aria-labelledby="dtab-${d.n}">
+        <!-- Mobile layout -->
+        <div class="md:hidden space-y-3">${mobileHead}${mobileBody}</div>
+        <!-- Desktop layout -->
+        <div class="hidden md:block space-y-6">${desktopBody}</div>
+      </article>`;
+    }).join("");
+  }
+
+  /* ---------------- Day switching ---------------- */
+  let currentDay = TODAY_N;
+
+  function centerMobileTab(n, smooth) {
+    const scroller = document.getElementById("dayTabsMobile");
+    const tab = document.getElementById("mtab-" + n);
+    if (!scroller || !tab) return;
+    const target = tab.offsetLeft - (scroller.clientWidth - tab.offsetWidth) / 2;
+    try {
+      scroller.scrollTo({ left: Math.max(0, target), behavior: smooth ? "smooth" : "auto" });
+    } catch (e) {
+      scroller.scrollLeft = Math.max(0, target);
+    }
+  }
+
+  function selectDay(n, opts) {
+    opts = opts || {};
+    if (n < 1 || n > 7) return;
+    currentDay = n;
+    const d = byDay(n);
+
+    DAYS.forEach((day) => {
+      const panel = document.getElementById("panel-" + day.n);
+      if (panel) panel.classList.toggle("hidden", day.n !== n);
+
+      const dtab = document.getElementById("dtab-" + day.n);
+      if (dtab) {
+        dtab.classList.toggle("active", day.n === n);
+        dtab.setAttribute("aria-selected", day.n === n ? "true" : "false");
+      }
+
+      const mtab = document.getElementById("mtab-" + day.n);
+      if (mtab) {
+        const active = day.n === n;
+        mtab.classList.toggle("bg-surface-container", active);
+        mtab.classList.toggle("bg-surface-container-low", !active);
+        mtab.classList.toggle("shadow-md", active);
+        mtab.classList.toggle("ring-1", active);
+        mtab.classList.toggle("ring-primary-fixed/60", active);
+        const code = mtab.querySelector(".day-code");
+        if (code) code.classList.toggle("text-primary-fixed", active);
+        const split = mtab.querySelector(".day-split");
+        if (split && day.type === "train") split.classList.toggle("text-on-surface", active);
+        mtab.setAttribute("aria-selected", active ? "true" : "false");
+      }
+    });
+
+    centerMobileTab(n, !!opts.smooth);
+    if (opts.updateHash !== false) {
+      try { history.replaceState(null, "", "#day-" + d.slug); } catch (e) { /* noop */ }
+    }
+    document.title = "Day " + n + " — " + d.name + " • " + d.split + " | APEX Split";
+  }
+
+  function dayFromHash() {
+    const m = /^#day[-=]([\w-]+)$/i.exec(location.hash || "");
+    if (!m) return null;
+    const key = m[1].toLowerCase();
+    if (/^[1-7]$/.test(key)) return parseInt(key, 10);
+    return SLUG_MAP[key] || null;
+  }
+
+  /* ---------------- Tab click handling (event delegation) ---------------- */
+  function setupTabHandlers() {
+    ["dayTabsDesktop", "dayTabsMobile"].forEach((id) => {
+      const container = document.getElementById(id);
+      if (!container) return;
+      container.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-day]");
+        if (!btn) return;
+        const n = parseInt(btn.getAttribute("data-day"), 10);
+        if (n >= 1 && n <= 7) selectDay(n, { smooth: true });
+      });
+    });
+  }
+
+  /* ---------------- Drawers (mobile accordions) ---------------- */
+  function setupDrawers() {
+    document.querySelectorAll(".drawer-toggle").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const drawer = btn.closest(".drawer");
+        const open = drawer.classList.toggle("open");
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    });
+  }
+
+  function openDrawerIfHash() {
+    const h = (location.hash || "").replace("#", "");
+    if (h === "missed-gym" || h === "guidelines") {
+      const drawer = document.getElementById(h);
+      if (drawer && drawer.classList.contains("drawer")) {
+        drawer.classList.add("open");
+        const btn = drawer.querySelector(".drawer-toggle");
+        if (btn) btn.setAttribute("aria-expanded", "true");
+      }
+    }
+  }
+
+  /* ---------------- Scroll spy (desktop nav + mobile bottom nav) ---------------- */
+  const NAV_IDS = ["overview", "schedule-viewer", "missed-gym", "guidelines"];
+
+  function setActiveNav(id) {
+    document.querySelectorAll(".nav-link").forEach((a) => {
+      const active = a.getAttribute("data-nav") === id;
+      a.classList.toggle("bg-primary-container", active);
+      a.classList.toggle("text-on-primary-container", active);
+      a.classList.toggle("font-bold", active);
+      a.classList.toggle("text-on-surface-variant", !active);
+    });
+    const bnavId = id === "overview" ? "schedule-viewer" : id;
+    document.querySelectorAll(".bnav").forEach((a) => {
+      const active = a.getAttribute("data-bnav") === bnavId;
+      a.classList.toggle("text-primary-fixed", active);
+      a.classList.toggle("text-on-surface-variant", !active);
+    });
+  }
+
+  function setupScrollSpy() {
+    if (!("IntersectionObserver" in window)) { setActiveNav("schedule-viewer"); return; }
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) setActiveNav(e.target.id); });
+    }, { rootMargin: "-30% 0px -60% 0px", threshold: 0 });
+    NAV_IDS.forEach((id) => { const el = document.getElementById(id); if (el) obs.observe(el); });
+    setActiveNav("schedule-viewer");
+  }
+
+  /* ---------------- Init ---------------- */
+  function updateTodayBadges() {
+    const d = byDay(TODAY_N);
+    const badge = document.getElementById("todayBadge");
+    const chip = document.getElementById("todayChip");
+    if (badge) badge.textContent = "Today: " + d.badge;
+    if (chip) chip.textContent = "Today: " + d.code;
+  }
+
+  function init() {
+    buildTabs();
+    buildPanels();
+    updateTodayBadges();
+    setupDrawers();
+    setupTabHandlers();
+
+    const fromHash = dayFromHash();
+    selectDay(fromHash || TODAY_N, { smooth: true });
+    openDrawerIfHash();
+    setupScrollSpy();
+
+    // Bottom nav "Top" button
+    const toTop = document.getElementById("toTop");
+    if (toTop) toTop.addEventListener("click", () => {
+      try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) { window.scrollTo(0, 0); }
+    });
+
+    // React to manual hash edits / shared links
+    window.addEventListener("hashchange", () => {
+      const n = dayFromHash();
+      if (n && n !== currentDay) selectDay(n, { updateHash: false, smooth: true });
+      openDrawerIfHash();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
