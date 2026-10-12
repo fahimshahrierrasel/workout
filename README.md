@@ -14,7 +14,7 @@ A zero-friction, single-page workout reference built for GitHub Pages. Open the 
 
 ## Design system
 
-Dark theme per the PRD (`Requirements.md` and the `desktop/` / `mobile/` reference artifacts):
+Dark theme tokens (as implemented in `index.html`):
 
 | Token | Value |
 | --- | --- |
