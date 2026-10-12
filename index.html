@@ -131,8 +131,23 @@
   <main class="w-full pt-20 md:pt-24 pb-32 md:pb-12">
     <div class="max-w-[1400px] mx-auto px-4 md:px-8 space-y-8">
 
-      <!-- ============ HERO / OVERVIEW ============ -->
-      <section class="rounded-xl bg-surface-container-low p-6 md:p-8 border border-surface-container-high/40 scroll-mt-24" id="overview">
+      <!-- ============ HERO / OVERVIEW (drawer on mobile) ============ -->
+      <section class="drawer scroll-mt-24 rounded-xl bg-surface-container-low border border-surface-container-high/40 overflow-hidden" id="overview">
+        <button type="button" class="drawer-toggle w-full px-4 py-4 md:px-8 md:pt-8 md:pb-0 flex items-center justify-between gap-3 text-left" aria-expanded="false" aria-controls="overview-content">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="md:hidden w-10 h-10 rounded-lg bg-primary-fixed/10 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-primary-fixed text-[20px]">workspace_premium</span>
+            </div>
+            <div class="min-w-0">
+              <div class="font-headline text-[11px] font-bold uppercase tracking-wider text-primary-fixed">// Program Overview</div>
+              <h1 class="font-headline text-xl md:text-3xl lg:text-4xl font-bold tracking-tight text-on-surface truncate">7-Day Workout Plan</h1>
+              <div class="md:hidden font-headline text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Build Muscle • Get Stronger • Improve Fitness</div>
+            </div>
+          </div>
+          <span class="drawer-chevron material-symbols-outlined text-on-surface-variant md:hidden text-[24px]">expand_more</span>
+        </button>
+
+        <div class="drawer-content px-4 pb-4 md:px-8 md:pb-8 pt-4 md:pt-6" id="overview-content">
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div class="space-y-2">
             <div class="flex flex-wrap items-center gap-2">
@@ -140,7 +155,6 @@
               <span class="px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-headline text-[11px] uppercase tracking-wider">Zero Logging</span>
               <span class="px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-headline text-[11px] uppercase tracking-wider">Video Form Guides</span>
             </div>
-            <h1 class="font-headline text-3xl md:text-4xl font-bold tracking-tight text-on-surface">7-Day Workout Plan</h1>
             <p class="text-on-surface-variant max-w-2xl text-[15px] leading-relaxed">
               Targeted hypertrophy &amp; strength progression. Pure instructional layout with direct YouTube form video links for every exercise and automatic day detection — open it and today's session is already on screen.
             </p>
@@ -160,6 +174,7 @@
               <span>Improve Fitness</span>
             </div>
           </div>
+        </div>
         </div>
       </section>
 
@@ -773,7 +788,7 @@
 
   function openDrawerIfHash() {
     const h = (location.hash || "").replace("#", "");
-    if (h === "missed-gym" || h === "guidelines") {
+    if (h === "overview" || h === "missed-gym" || h === "guidelines") {
       const drawer = document.getElementById(h);
       if (drawer && drawer.classList.contains("drawer")) {
         drawer.classList.add("open");
