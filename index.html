@@ -91,6 +91,17 @@
     @keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
     #lightbox:not(.hidden) { animation: lbIn 0.2s ease; }
     #lightboxImg { animation: panelIn 0.25s ease; }
+
+    /* Plan switcher (Men / Women) */
+    .plan-opt {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 18px; border-radius: 999px; border: 0; cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700;
+      letter-spacing: .02em; color: #9aa0a6; background: transparent;
+      transition: background .2s ease, color .2s ease;
+    }
+    .plan-opt svg { flex: 0 0 auto; }
+    .plan-opt-active { background: #c3f400; color: #0c0e11; }
   </style>
 </head>
 
@@ -145,14 +156,27 @@
             </div>
             <div class="min-w-0">
               <div class="font-headline text-[11px] font-bold uppercase tracking-wider text-primary-fixed">// Program Overview</div>
-              <h1 class="font-headline text-xl md:text-3xl lg:text-4xl font-bold tracking-tight text-on-surface truncate">7-Day Workout Plan</h1>
-              <div class="md:hidden font-headline text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Build Muscle • Get Stronger • Improve Fitness</div>
+              <h1 id="planTitle" class="font-headline text-xl md:text-3xl lg:text-4xl font-bold tracking-tight text-on-surface truncate">7-Day Workout Plan</h1>
+              <div id="planSubtitle" class="md:hidden font-headline text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Build Muscle • Get Stronger • Improve Fitness</div>
             </div>
           </div>
           <span class="drawer-chevron material-symbols-outlined text-on-surface-variant md:hidden text-[24px]">expand_more</span>
         </button>
 
         <div class="drawer-content px-4 pb-4 md:px-8 md:pb-8 pt-4 md:pt-6" id="overview-content">
+          <div class="flex justify-start mb-6">
+            <div id="planSwitch" role="group" aria-label="Choose workout plan"
+              class="inline-flex bg-surface-container border border-surface-container-highest rounded-full p-1">
+              <button type="button" class="plan-opt" data-plan="men" aria-pressed="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="3.2"/><path d="M12 9.5c-3.2 0-5.2 2.2-5.2 5.2V21h10.4v-6.3c0-3-2-5.2-5.2-5.2z"/></svg>
+                <span>Men's Plan</span>
+              </button>
+              <button type="button" class="plan-opt" data-plan="women" aria-pressed="false">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="3.2"/><path d="M12 9.5c-1.6 0-2.6.8-3.4 2.6L4.8 21h14.4l-3.8-8.9c-.8-1.8-1.8-2.6-3.4-2.6z"/></svg>
+                <span>Women's Plan</span>
+              </button>
+            </div>
+          </div>
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div class="space-y-2">
             <div class="flex flex-wrap items-center gap-2">
@@ -698,6 +722,26 @@
   } catch (err) { /* storage unavailable - keep default */ }
   let DAYS = PLANS[activePlan].days;
 
+  function applyPlan(key) {
+    if (!PLANS[key] || key === activePlan) return;
+    activePlan = key;
+    DAYS = PLANS[key].days;
+    try { localStorage.setItem("plan", key); } catch (err) { /* noop */ }
+    const t = document.getElementById("planTitle");
+    const s = document.getElementById("planSubtitle");
+    if (t) t.textContent = PLAN_META[key].title;
+    if (s) s.textContent = PLAN_META[key].subtitle;
+    document.querySelectorAll("#planSwitch .plan-opt").forEach((b) => {
+      const on = b.getAttribute("data-plan") === key;
+      b.classList.toggle("plan-opt-active", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    buildTabs();
+    buildPanels();
+    updateTodayBadges();
+    selectDay(dayFromHash() || TODAY_N, { smooth: false, updateHash: false });
+  }
+
 
   /* ---------------- Helpers ---------------- */
   const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -937,7 +981,7 @@
     if (opts.updateHash !== false) {
       try { history.replaceState(null, "", "#day-" + d.slug); } catch (e) { /* noop */ }
     }
-    document.title = "Day " + n + " — " + d.name + " • " + d.split + " | Fahim's 7-Day Workout Protocol";
+    document.title = "Day " + n + " — " + d.name + " • " + d.split + " | " + PLAN_META[activePlan].title;
   }
 
   function dayFromHash() {
@@ -959,6 +1003,21 @@
         const n = parseInt(btn.getAttribute("data-day"), 10);
         if (n >= 1 && n <= 7) selectDay(n, { smooth: true });
       });
+    });
+  }
+
+  /* ---------------- Plan switcher (Men / Women) ---------------- */
+  function setupPlanSwitch() {
+    const sw = document.getElementById("planSwitch");
+    if (!sw) return;
+    sw.addEventListener("click", (e) => {
+      const btn = e.target.closest(".plan-opt");
+      if (btn) applyPlan(btn.getAttribute("data-plan"));
+    });
+    document.querySelectorAll("#planSwitch .plan-opt").forEach((b) => {
+      const on = b.getAttribute("data-plan") === activePlan;
+      b.classList.toggle("plan-opt-active", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
     });
   }
 
@@ -1088,11 +1147,25 @@
     updateTodayBadges();
     setupDrawers();
     setupTabHandlers();
+    setupPlanSwitch();
     setupLightbox();
 
     const fromHash = dayFromHash();
     selectDay(fromHash || TODAY_N, { smooth: true });
     openDrawerIfHash();
+
+    // First visit on mobile: open the overview drawer so the plan switcher is discoverable
+    try {
+      if (!localStorage.getItem("plan") && window.matchMedia("(max-width: 767px)").matches) {
+        const dr = document.getElementById("overview");
+        if (dr) {
+          dr.classList.add("open");
+          const b = dr.querySelector(".drawer-toggle");
+          if (b) b.setAttribute("aria-expanded", "true");
+        }
+      }
+    } catch (err) { /* noop */ }
+
     setupScrollSpy();
 
     // Bottom nav "Top" button
