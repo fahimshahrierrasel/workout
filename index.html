@@ -702,6 +702,7 @@
   /* ---------------- Helpers ---------------- */
   const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   const ytUrl = (topic) => "https://www.youtube.com/results?search_query=how+to+do+" + topic.trim().split(/\s+/).join("+") + "+proper+form";
+  const setupUrl = (topic) => "https://www.youtube.com/results?search_query=how+to+set+up+" + topic.trim().split(/\s+/).join("+");
   const pad2 = (n) => (n < 10 ? "0" + n : "" + n);
   const byDay = (n) => DAYS[n - 1];
 
@@ -751,11 +752,19 @@
             </div>
           </div>
         </div>
-        <a aria-label="Watch ${esc(ex.name)} form guide" title="Watch form guide"
-          class="shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-error-container text-on-error-container hover:bg-error hover:text-on-error transition-colors"
-          href="${ytUrl(ex.yt)}" target="_blank" rel="noopener noreferrer">
-          <span class="material-symbols-outlined text-[24px]">smart_display</span>
-        </a>
+        <div class="shrink-0 flex flex-col items-center gap-2">
+          <a aria-label="Watch ${esc(ex.name)} form guide" title="Watch form guide"
+            class="flex items-center justify-center w-12 h-12 rounded-lg bg-error-container text-on-error-container hover:bg-error hover:text-on-error transition-colors"
+            href="${ytUrl(ex.yt)}" target="_blank" rel="noopener noreferrer">
+            <span class="material-symbols-outlined text-[24px]">smart_display</span>
+          </a>
+          ${ex.setup ? `
+          <a aria-label="Watch how to set up ${esc(ex.setup)}" title="Watch machine setup"
+            class="flex items-center justify-center w-9 h-9 rounded-lg bg-primary-fixed/10 text-primary-fixed border border-primary-fixed/40 transition-colors"
+            href="${setupUrl(ex.setup)}" target="_blank" rel="noopener noreferrer">
+            <span class="material-symbols-outlined text-[18px]">tune</span>
+          </a>` : ""}
+        </div>
       </div>`).join("");
   }
 
@@ -795,6 +804,14 @@
               <span>YouTube</span>
             </a>
           </td>
+          <td class="py-3.5 px-4 text-right">
+            ${ex.setup ? `
+            <a class="inline-flex items-center justify-center w-9 h-9 rounded-md bg-primary-fixed/10 hover:bg-primary-fixed/20 text-primary-fixed border border-primary-fixed/40 transition-all"
+              href="${setupUrl(ex.setup)}" target="_blank" rel="noopener noreferrer"
+              aria-label="Watch how to set up ${esc(ex.setup)}" title="Watch machine setup">
+              <span class="material-symbols-outlined text-[18px]">tune</span>
+            </a>` : `<span class="text-on-surface-variant/40">—</span>`}
+          </td>
         </tr>`).join("");
 
     return `
@@ -808,6 +825,7 @@
               <th class="py-3 px-4">Exercise Name</th>
               <th class="py-3 px-4 w-40">Sets × Reps</th>
               <th class="py-3 px-4 text-right w-48">Video Tutorial</th>
+              <th class="py-3 px-4 text-right w-24">Machine Setup</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-surface-container-high/30 text-sm">${rows}
