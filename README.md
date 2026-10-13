@@ -5,7 +5,8 @@ A zero-friction, single-page workout reference built for GitHub Pages. Open the 
 ## Features
 
 - **Automatic day detection** — `new Date().getDay()` maps the visitor's local day to the correct split (Monday = Day 1 … Sunday = Day 7) with a `TODAY` badge on the active tab
-- **7-day split viewer** — interactive tabs (grid on desktop, swipeable carousel on mobile) with hash deep links (`#day-push`, `#day-pull`, `#day-legs-abs`, `#day-upper`, `#day-shoulders-legs`, `#day-rest-thu`, `#day-rest-sun`, or `#day-1`…`#day-7`)
+- **7-day split viewer** — interactive tabs (grid on desktop, swipeable carousel on mobile) with hash deep links (`#day-push`, `#day-pull`, `#day-legs-abs`, `#day-upper`, `#day-lower-abs`, `#day-rest-thu`, `#day-rest-sun`, or `#day-1`…`#day-7`)
+- **Exercise image pop-up** — tap/click any exercise thumbnail to open it full-size in a lightbox (browse with ← → arrows, close with Esc or backdrop tap)
 - **YouTube form guides** — every exercise links to a search in the format `how to do [exercise] proper form` (opens in a new tab, `rel="noopener noreferrer"`, 48×48 px touch targets on mobile)
 - **Missed Gym Protocol** — the golden rule, absence-duration playbook (1–2 / 3–5 / 6–10 / 10–14+ days) and a practical field example
 - **General Training Guidelines** — 6 core principles plus a personalization disclaimer
