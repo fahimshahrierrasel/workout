@@ -1,4 +1,6 @@
-# Fahim's 7-Day Workout Protocol
+# 7-Day Workout Protocol
+
+> Built by [@fahimshahrierrasel](https://github.com/fahimshahrierrasel)
 
 A zero-friction, single-page workout reference built for GitHub Pages. Open the page and today's training day is already on screen — no logging, no accounts, no timers.
 
