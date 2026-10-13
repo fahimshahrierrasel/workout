@@ -102,6 +102,12 @@
     }
     .plan-opt svg { flex: 0 0 auto; }
     .plan-opt-active { background: #c3f400; color: #0c0e11; }
+
+    /* Missing exercise photo placeholder */
+    .img-missing {
+      border: 2px dashed rgba(195, 244, 0, .35) !important;
+      background: repeating-linear-gradient(45deg, rgba(195,244,0,.04) 0 8px, transparent 8px 16px);
+    }
   </style>
 </head>
 
@@ -453,6 +459,10 @@
     </button>
     <figure class="relative z-10 flex flex-col items-center gap-3 max-w-[92vw] sm:max-w-md">
       <img id="lightboxImg" alt="" class="max-h-[62vh] sm:max-h-[70vh] w-auto rounded-xl border border-white/10 shadow-2xl bg-surface-container-low"/>
+      <div id="lightboxFallback" class="hidden w-64 h-64 rounded-xl border-2 border-dashed border-primary-fixed/40 bg-surface-container-low flex-col items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-primary-fixed text-[32px]">image</span>
+        <span class="font-headline text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Photo coming soon</span>
+      </div>
       <figcaption class="flex flex-col items-center gap-1 text-center">
         <span id="lightboxCounter" class="font-headline text-[11px] font-bold uppercase tracking-wider text-primary-fixed"></span>
         <span id="lightboxCaption" class="font-headline font-bold uppercase tracking-tight text-on-surface text-sm sm:text-base"></span>
@@ -785,7 +795,7 @@
         <div class="flex items-center gap-3 min-w-0">
           <button type="button" data-lb="${d.n}" data-lb-idx="${i}" aria-label="View ${esc(ex.name)} image" title="Tap to enlarge"
             class="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-surface-container-high active:scale-95 transition-transform cursor-zoom-in">
-            <img src="${esc(ex.img)}" alt="${esc(ex.name)}" title="${esc(ex.name)}" class="w-full h-full object-cover pointer-events-none" loading="lazy" onerror="this.style.display='none'"/>
+            <img src="${esc(ex.img)}" alt="${esc(ex.name)}" title="${esc(ex.name)}" class="w-full h-full object-cover pointer-events-none" loading="lazy" onerror="this.style.display='none'; this.parentNode.classList.add('img-missing'); this.parentNode.setAttribute('title', 'Photo coming soon - add the JPG to workouts/')"/>
             <span class="absolute bottom-0 right-0 px-1 rounded-tl bg-surface-container-lowest/90 font-headline text-[9px] font-bold text-primary-fixed pointer-events-none">${pad2(i + 1)}</span>
           </button>
           <div class="flex flex-col min-w-0">
@@ -836,7 +846,7 @@
           <td class="py-2.5 px-4">
             <button type="button" data-lb="${d.n}" data-lb-idx="${i}" aria-label="View ${esc(ex.name)} image" title="Click to enlarge"
               class="w-16 h-16 rounded-lg overflow-hidden bg-surface-container-high shrink-0 block hover:ring-2 hover:ring-primary-fixed/70 transition-all cursor-zoom-in">
-              <img src="${esc(ex.img)}" alt="${esc(ex.name)}" title="${esc(ex.name)}" class="w-full h-full object-cover pointer-events-none" loading="lazy" onerror="this.style.display='none'"/>
+              <img src="${esc(ex.img)}" alt="${esc(ex.name)}" title="${esc(ex.name)}" class="w-full h-full object-cover pointer-events-none" loading="lazy" onerror="this.style.display='none'; this.parentNode.classList.add('img-missing'); this.parentNode.setAttribute('title', 'Photo coming soon - add the JPG to workouts/')"/>
             </button>
           </td>
           <td class="py-3.5 px-4 font-medium text-on-surface">${esc(ex.name)}</td>
@@ -1081,12 +1091,15 @@
     if (!lb || !img) return;
 
     let lbDay = 1, lbIdx = 0;
+    const fb = document.getElementById("lightboxFallback");
     const exList = () => { const d = byDay(lbDay); return d && d.type === "train" ? d.exercises : []; };
 
     function render() {
       const list = exList();
       if (!list.length) return;
       const ex = list[lbIdx];
+      img.onerror = () => { img.style.display = "none"; if (fb) { fb.classList.remove("hidden"); fb.classList.add("flex"); } };
+      img.onload = () => { if (fb) { fb.classList.add("hidden"); fb.classList.remove("flex"); } };
       img.src = ex.img;
       img.alt = ex.name;
       cap.textContent = ex.name;
