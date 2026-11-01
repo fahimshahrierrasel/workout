@@ -2,9 +2,13 @@
 
 Goal: Build Muscle • Get Stronger • Improve Fitness
 
-## Day 1 — PUSH
+Week runs Tuesday → Monday • Rest days: Friday & Monday • Cardio daily except leg days
+
+## Day 1 — Tuesday — PUSH
 
 Chest • Shoulders • Triceps
+
+**Cardio:** 10–15 min moderate (incline walk, bike, or elliptical) after lifting.
 
 | # | Image | Workout | Sets | Reps |
 |---|-------|---------|------|------|
@@ -15,9 +19,11 @@ Chest • Shoulders • Triceps
 | 5 | ![Triceps Extensions](workouts/Push%20Day/Triceps%20Extensions.gif) | Triceps Extensions | 2–3 | 8–12 |
 | 6 | ![DB Lateral Raise](workouts/Push%20Day/DB%20Lateral%20Raise.gif) | DB Lateral Raise | 2–3 | 8–12 |
 
-## Day 2 — PULL
+## Day 2 — Wednesday — PULL
 
 Back • Rear Shoulders • Biceps
+
+**Cardio:** 10–15 min moderate (incline walk, bike, or elliptical) after lifting.
 
 | # | Image | Workout | Sets | Reps |
 |---|-------|---------|------|------|
@@ -28,9 +34,11 @@ Back • Rear Shoulders • Biceps
 | 5 | ![EZ-Bar Preacher Curl](workouts/Pull%20Day/EZ-Bar%20Preacher%20Curl.gif) | EZ-Bar Preacher Curl | 2–3 | 8–12 |
 | 6 | ![Cable Hammer Curl](workouts/Pull%20Day/Cable%20Hammer%20Curl.gif) | Cable Hammer Curl | 2–3 | 8–12 |
 
-## Day 3 — LEGS
+## Day 3 — Thursday — LEGS & ABS
 
-Quadriceps • Hamstrings • Glutes • Calves
+Quadriceps • Hamstrings • Glutes • Calves • Core
+
+**Cardio:** None — leg day; let the legs recover.
 
 | # | Image | Workout | Sets | Reps |
 |---|-------|---------|------|------|
@@ -40,8 +48,11 @@ Quadriceps • Hamstrings • Glutes • Calves
 | 4 | ![Leg Curl](workouts/Leg%20Day/Leg%20Curl.gif) | Leg Curl | 2–3 | 8–12 |
 | 5 | ![Adductor Machine](workouts/Leg%20Day/Adductor%20Machine.gif) | Adductor Machine | 2–3 | 8–12 |
 | 6 | ![Smith Calf Raises](workouts/Leg%20Day/Smith%20Calf%20Raises.gif) | Smith Calf Raises | 2–3 | 8–12 |
+| 7 | ![Cable Reverse Crunch](workouts/Lower%20Day%20%26%20Abs/Cable%20Reverse%20Crunch.gif) | Cable Reverse Crunch | 2–3 | 10–15 |
 
-## Day 4 — REST & RECOVERY
+## Day 4 — Friday — REST & RECOVERY
+
+**Cardio:** Optional — 20–30 min easy walk.
 
 * Get 7–9 hours of sleep.
 
@@ -49,13 +60,13 @@ Quadriceps • Hamstrings • Glutes • Calves
 
 * Eat balanced meals with sufficient protein.
 
-* Optional: light walking or gentle stretching.
-
 * Let your muscles recover before the next session.
 
-## Day 5 — UPPER
+## Day 5 — Saturday — UPPER
 
 Chest • Back • Shoulders • Arms
+
+**Cardio:** 10–15 min moderate (incline walk, bike, or elliptical) after lifting.
 
 | # | Image | Workout | Sets | Reps |
 |---|-------|---------|------|------|
@@ -66,9 +77,11 @@ Chest • Back • Shoulders • Arms
 | 5 | ![Cable Curl](workouts/Upper%20Day/Cable%20Curl.gif) | Cable Curl | 2–3 | 8–12 |
 | 6 | ![Overhead Extension](workouts/Upper%20Day/Overhead%20Extension.gif) | Overhead Extension | 2–3 | 8–12 |
 
-## Day 6 — LOWER & ABS
+## Day 6 — Sunday — LOWER & ABS
 
 Quadriceps • Hamstrings • Calves • Core
+
+**Cardio:** None — leg day; let the legs recover.
 
 | # | Image | Workout | Sets | Reps |
 |---|-------|---------|------|------|
@@ -79,111 +92,15 @@ Quadriceps • Hamstrings • Calves • Core
 | 5 | ![Smith Calf Raises](workouts/Lower%20Day%20%26%20Abs/Smith%20Calf%20Raises.gif) | Smith Calf Raises | 2–3 | 8–12 |
 | 6 | ![Cable AB Crunch](workouts/Lower%20Day%20%26%20Abs/Cable%20AB%20Crunch.gif) | Cable AB Crunch | 2–3 | 8–12 |
 
-## Day 7 — REST & RECOVERY
+## Day 7 — Monday — REST & RECOVERY
+
+**Cardio:** Optional — 20–30 min easy walk.
 
 * Prioritize sleep and hydration.
 
 * Eat nutritious meals.
 
-* Take an optional walk.
-
-* Prepare for the next training cycle.
-
----
-
-# Women's 7-Day Workout Plan
-
-Goal: Balanced Full-Body • Glute Emphasis • Same Gym Machines
-
-## Day 1 — PUSH
-
-Chest • Shoulders • Triceps
-
-| # | Image | Workout | Sets | Reps |
-|---|-------|---------|------|------|
-| 1 | ![Machine Press](workouts/Push%20Day/Machine%20Press.gif) | Machine Press | 2–3 | 8–12 |
-| 2 | ![DB Shoulder Press](workouts/Push%20Day/DB%20Shoulder%20Press.gif) | DB Shoulder Press | 2–3 | 8–12 |
-| 3 | ![Low-To-High Cable Fly](workouts/Push%20Day/Low-To-High%20Cable%20Fly.gif) | Low-To-High Cable Fly | 2–3 | 10–15 |
-| 4 | ![DB Lateral Raise](workouts/Push%20Day/DB%20Lateral%20Raise.gif) | DB Lateral Raise | 2–3 | 12–15 |
-| 5 | ![Triceps Extensions](workouts/Push%20Day/Triceps%20Extensions.gif) | Triceps Extensions | 2–3 | 10–12 |
-| 6 | ![Overhead Extension](workouts/Upper%20Day/Overhead%20Extension.gif) | Overhead Extension | 2–3 | 10–12 |
-
-## Day 2 — PULL
-
-Back • Rear Delts • Biceps
-
-| # | Image | Workout | Sets | Reps |
-|---|-------|---------|------|------|
-| 1 | ![Lat Pulldown](workouts/Pull%20Day/Lat%20Pulldown.gif) | Lat Pulldown | 2–3 | 8–12 |
-| 2 | ![Chest Supported Row](workouts/Pull%20Day/Chest%20Supported%20Row.gif) | Chest Supported Row | 2–3 | 8–12 |
-| 3 | ![Face Pull](workouts/Pull%20Day/Face%20Pull.gif) | Face Pull | 2–3 | 12–15 |
-| 4 | ![Reverse Pec Dec](workouts/Pull%20Day/Reverse%20Pec%20Dec.gif) | Reverse Pec Dec | 2–3 | 12–15 |
-| 5 | ![Cable Curl](workouts/Upper%20Day/Cable%20Curl.gif) | Cable Curl | 2–3 | 10–12 |
-| 6 | ![Cable Hammer Curl](workouts/Pull%20Day/Cable%20Hammer%20Curl.gif) | Cable Hammer Curl | 2–3 | 10–12 |
-
-## Day 3 — GLUTES & LEGS
-
-Glutes • Hamstrings • Quadriceps
-
-| # | Image | Workout | Sets | Reps |
-|---|-------|---------|------|------|
-| 1 | ![Barbell Hip Thrust](workouts/Glute%20%26%20Leg%20Day/Barbell%20Hip%20Thrust.gif) | Barbell Hip Thrust | 2–3 | 8–12 |
-| 2 | ![Bulgarian Split Squat](workouts/Glute%20%26%20Leg%20Day/Bulgarian%20Split%20Squat.gif) | Bulgarian Split Squat | 2–3 | 8–10 |
-| 3 | ![Romanian Deadlift](workouts/Leg%20Day/Romanian%20Deadlift.gif) | Romanian Deadlift | 2–3 | 8–10 |
-| 4 | ![Leg Extension](workouts/Leg%20Day/Leg%20Extension.gif) | Leg Extension | 2–3 | 10–12 |
-| 5 | ![Leg Curl](workouts/Leg%20Day/Leg%20Curl.gif) | Leg Curl | 2–3 | 10–12 |
-| 6 | ![Adductor Machine](workouts/Leg%20Day/Adductor%20Machine.gif) | Adductor Machine | 2–3 | 12–15 |
-
-## Day 4 — REST & RECOVERY
-
-* Get 7–9 hours of sleep.
-
-* Drink enough water.
-
-* Eat balanced meals with sufficient protein.
-
-* Optional: light walking or gentle stretching.
-
-* Let your muscles recover before the next session.
-
-## Day 5 — UPPER
-
-Back • Chest • Shoulders • Arms
-
-| # | Image | Workout | Sets | Reps |
-|---|-------|---------|------|------|
-| 1 | ![Lat Pulldown](workouts/Pull%20Day/Lat%20Pulldown.gif) | Lat Pulldown | 2–3 | 8–10 |
-| 2 | ![Close-Grip Seated Row](workouts/Pull%20Day/Close-Grip%20Seated%20Row.gif) | Close-Grip Seated Row | 2–3 | 8–12 |
-| 3 | ![DB Shoulder Press](workouts/Upper%20Day/DB%20Shoulder%20Press.gif) | DB Shoulder Press | 2–3 | 8–12 |
-| 4 | ![Pec Dec](workouts/Upper%20Day/Pec%20Dec.gif) | Pec Dec | 2–3 | 10–12 |
-| 5 | ![DB Lateral Raise](workouts/Push%20Day/DB%20Lateral%20Raise.gif) | DB Lateral Raise | 2–3 | 12–15 |
-| 6 | ![Overhead Extension](workouts/Upper%20Day/Overhead%20Extension.gif) | Overhead Extension | 2–3 | 10–12 |
-
-## Day 6 — GLUTES, LEGS & ABS
-
-Glutes • Quadriceps • Calves • Core
-
-| # | Image | Workout | Sets | Reps |
-|---|-------|---------|------|------|
-| 1 | ![Leg Press](workouts/Lower%20Day%20%26%20Abs/Leg%20Press.gif) | Leg Press (high & wide stance) | 2–3 | 8–12 |
-| 2 | ![Smith Sumo Squat](workouts/Glute%2C%20Leg%20%26%20Abs/Smith%20Sumo%20Squat.gif) | Smith Sumo Squat | 2–3 | 8–10 |
-| 3 | ![Cable Glute Kickback](workouts/Glute%2C%20Leg%20%26%20Abs/Cable%20Glute%20Kickback.gif) | Cable Glute Kickback | 2–3 | 12–15 |
-| 4 | ![Smith Calf Raises](workouts/Lower%20Day%20%26%20Abs/Smith%20Calf%20Raises.gif) | Smith Calf Raises | 2–3 | 12–15 |
-| 5 | ![Cable AB Crunch](workouts/Lower%20Day%20%26%20Abs/Cable%20AB%20Crunch.gif) | Cable AB Crunch | 2–3 | 12–15 |
-| 6 | ![Cable Reverse Crunch](workouts/Glute%2C%20Leg%20%26%20Abs/Cable%20Reverse%20Crunch.gif) | Cable Reverse Crunch | 2–3 | 10–15 |
-
-## Day 7 — REST & RECOVERY
-
-* Prioritize sleep and hydration.
-
-* Eat nutritious meals.
-
-* Take an optional walk.
-
-* Prepare for the next training cycle.
-
-> The Missed Gym Protocol and General Training Guidelines below apply to both plans.
-> Machine exercises on this site include a machine-setup video link (sliders icon).
+* Prepare for Tuesday's Push session.
 
 ---
 
@@ -202,7 +119,7 @@ The rule: Don't restart the entire plan or try to make up missed workouts. Resum
 
 Suppose you completed Day 2 (Pull), then missed the gym for four days.
 
-* Your next workout is Day 3 — Legs.
+* Your next workout is Day 3 — Legs & Abs.
 
 * After that, continue with Day 4 — Rest.
 
@@ -227,5 +144,15 @@ If you are sick, injured, or still feeling unusually fatigued, recover first and
 * Consistency: Missing a few days will not ruin your progress. Avoid doubling your workload to compensate.
 
 * Training frequency: Follow the split in order, but don't force yourself to train seven consecutive calendar days.
+
+## Coach's Tips
+
+* **Double Progression** — Stay at a weight until you hit the top of the rep range on every set. Then add 2.5–5 kg and build the reps back up.
+
+* **Deload Every 6–8 Weeks** — Take one lighter week (~60–70% of your usual weights, same exercises) to fully recover, then resume where you left off.
+
+* **Protein & Sleep** — Aim for ~1.6–2.2 g of protein per kg of bodyweight daily and 7–9 hours of sleep — muscle grows between sessions.
+
+* **Cardio Pacing** — Lifting-day cardio should feel like 4–6/10 effort — you can still hold a conversation. If it drains your next session, shorten it. Rest-day walks stay an easy 2–3/10.
 
 Important: This is a suggested exercise plan. Adjust the exercise selection and training volume to your experience and recovery.
